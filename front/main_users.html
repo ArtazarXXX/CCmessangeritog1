@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CC messanger</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: black;
+            font-family: Arial, sans-serif;
+            padding-top: 70px; /* Отступ для фиксированной панели */
+        }
+
+        .nav-bar {
+            background-color: #4CAF50;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+        }
+
+        .nav-bar button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: white;
+            color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-bar button:hover {
+            background-color: #f0f0f0;
+            transform: scale(1.05);
+        }
+
+        .content {
+            padding: 20px;
+            color: white;
+            min-height: 100vh;
+        }
+
+        .scroll-to-bottom-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 15px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+        }
+
+        .scroll-to-bottom-btn:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav-bar">
+        <a href="/profil"><button>Профиль</button></a>
+        <a href="/messageht"><button>Написать</button></a>
+        <a href="/exit"><button>Выйти</button></a>
+    </nav>
+
+    <div class="content">
+        <h1>Добро пожаловать!</h1>
+        <div id="messages"></div>
+        <button class="scroll-to-bottom-btn" onclick="scrollToLastMessage()">📬 К последнему сообщению</button>
+    </div>
+
+    <script>
+        const roleColors = {
+            'admin': '#ff6b6b',
+            'user': '#95e1d3'
+        };
+
+        function getRoleColor(role) {
+            return roleColors[role] || '#cccccc';
+        }
+
+        function renderMessages(messages) {
+            const container = document.getElementById('messages');
+            container.innerHTML = '';
+
+            messages.forEach(msg => {
+                const messageBlock = document.createElement('div');
+                messageBlock.style.cssText = 'margin-bottom: 15px; padding: 10px; background-color: #333; border-radius: 8px;';
+
+                const header = document.createElement('div');
+                header.style.cssText = 'margin-bottom: 5px;';
+
+                const usernameSpan = document.createElement('span');
+                usernameSpan.textContent = msg.username;
+                usernameSpan.style.cssText = 'font-weight: bold; font-size: 16px;';
+
+                const roleSpan = document.createElement('span');
+                roleSpan.textContent = `(${msg.role})`;
+                roleSpan.style.cssText = `margin-left: 10px; color: ${getRoleColor(msg.role)}; font-weight: bold;`;
+
+                header.appendChild(usernameSpan);
+                header.appendChild(roleSpan);
+
+                const messageText = document.createElement('div');
+                messageText.textContent = msg.message;
+                messageText.style.cssText = 'color: #ddd; margin-top: 5px;';
+
+                messageBlock.appendChild(header);
+                messageBlock.appendChild(messageText);
+                container.appendChild(messageBlock);
+            });
+        }
+
+        fetch('/get_messages')
+        .then(response => response.json())
+        .then(messages => {
+            renderMessages(messages);
+            scrollToLastMessage(); // Автоскролл к последнему сообщению при загрузке
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+        function scrollToLastMessage() {
+            const container = document.getElementById('messages');
+            const lastMessage = container.lastElementChild;
+            if (lastMessage) {
+                lastMessage.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }
+        }
+    </script>
+</body>
+</html>

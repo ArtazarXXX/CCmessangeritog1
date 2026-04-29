@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CC Messenger</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .bl_bord {
+            background-color: black;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .cc_logo {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 40px;
+            filter: drop-shadow(0 0 20px rgba(76, 175, 80, 0.5));
+        }
+
+        .title {
+            color: #4CAF50;
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+        }
+
+        .auth-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 400px;
+            align-items: center;
+        }
+
+        .auth-buttons button {
+            padding: 18px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+            width: 100%;
+            text-align: center;
+        }
+
+        .auth-buttons button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.5);
+        }
+
+        .auth-buttons button:active {
+            transform: translateY(-1px);
+        }
+
+        .guest-btn {
+            background: linear-gradient(135deg, #666 0%, #555 100%) !important;
+            box-shadow: 0 4px 15px rgba(100, 100, 100, 0.3) !important;
+        }
+
+        .guest-btn:hover {
+            box-shadow: 0 6px 20px rgba(100, 100, 100, 0.5) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="bl_bord"></div>
+    <div class="container">
+        <img class="cc_logo" alt="CC Messenger Logo" src="https://avatars.mds.yandex.net/get-shedevrum/12363575/ceca3477c12e11eeaac92e0a4af00d3d/orig">
+        <h1 class="title">CC Messenger</h1>
+        <div class="auth-buttons">
+            <a href="/reght"><button>Зарегистрироваться</button></a>
+            <a href="/loght"><button>Войти</button></a>
+        </div>
+    </div>
+</body>
+</html>
