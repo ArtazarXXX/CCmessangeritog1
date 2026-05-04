@@ -108,7 +108,7 @@
         function renderMessages(messages) {
             const container = document.getElementById('messages');
             container.innerHTML = '';
-
+            console.log("all ok")
             messages.forEach(msg => {
                 const messageBlock = document.createElement('div');
                 messageBlock.style.cssText = 'margin-bottom: 15px; padding: 10px; background-color: #333; border-radius: 8px;';
@@ -140,7 +140,7 @@
         fetch('/get_messages')
         .then(response => response.json())
         .then(messages => {
-            renderMessages(messages);
+            setInterval(renderMessages(messages), 3000);
             scrollToLastMessage(); // Автоскролл к последнему сообщению при загрузке
         })
         .catch(error => {
